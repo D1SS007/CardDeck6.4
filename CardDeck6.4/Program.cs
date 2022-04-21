@@ -53,7 +53,7 @@ namespace CardDeck6._4
         {
             for (int i = 0; i < count; i++)
             {
-                _cardsInDeck.Enqueue(new Card(random.Next(0, _amountOfValeOfCard), random.Next(0,_amountOfSuits), random.Next(0,_amountOfColors)));    
+                _cardsInDeck.Enqueue(new Card(random.Next(0, _amountOfValeOfCard), random.Next(0, _amountOfSuits), random.Next(0, _amountOfColors)));    
             }            
         }
 
@@ -134,7 +134,7 @@ namespace CardDeck6._4
             {
                 _cardInHand.Add(card);
                 amountOfCardsInHand++;
-                Console.WriteLine($"Вы взяли карту\nУвас в руке {amountOfCardsInHand} карт");
+                Console.WriteLine($"Вы взяли карту\nУ вас в руке {amountOfCardsInHand} карт");
                 PrintPlugMassage();
             }
             else
