@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace CardDeck6._4
@@ -7,32 +7,30 @@ namespace CardDeck6._4
     {
         static void Main(string[] args)
         {
+            bool isWorking = true;
+
             int amountOfCardsInDeck = 52;
 
             Player player = new Player();
             Deck deck = new Deck(amountOfCardsInDeck);
 
-            bool isWorking = true;
-
             while (isWorking)
             {
-                Console.WriteLine($"1 - Вытянуть карту\n2 - Показать взятые карты\n3 - Закончить игру");
-                Console.WriteLine("Что сделать");
-                int userInput = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine($"1 - Вытянуть карту\n2 - Показать взятые карты\n3 - Закончить игру\nЧто сделать");
 
-                switch (userInput)
+                switch (Console.ReadLine())
                 {
-                    case 1:
+                    case "1":
                         player.TakeCard(deck);
                         break;
-                    case 2:
+                    case "2":
                         player.ShowCardsInHand();                        
                         break;
-                    case 3:                        
+                    case "3":                        
                         isWorking = false;
                         break;
                     default:
-                        Console.WriteLine("Некоректные ввод");
+                        Console.WriteLine("Некоректны ввод");
                         break;
                 }                
             }
@@ -41,19 +39,19 @@ namespace CardDeck6._4
 
     class Deck
     {
-        Random random = new Random();
-        
         private const int _amountOfValeOfCard = 13;
         private const int _amountOfSuits = 4;
         private const int _amountOfColors = 2;
-        
+
+        private Random random = new Random();
+
         private Queue<Card> _cardsInDeck = new Queue<Card>();      
 
         public Deck(int count)    
         {
             for (int i = 0; i < count; i++)
             {
-                _cardsInDeck.Enqueue(new Card(random.Next(0, _amountOfValeOfCard), random.Next(0, _amountOfSuits), random.Next(0, _amountOfColors)));    
+                _cardsInDeck.Enqueue(new Card(random.Next(0, _amountOfValeOfCard), random.Next(0,_amountOfSuits), random.Next(0,_amountOfColors)));    
             }            
         }
 
@@ -85,40 +83,40 @@ namespace CardDeck6._4
             Color = color;            
         }
 
-        public void ShowCardInfo()
-        {
-            Console.WriteLine($"{(CardColor)Color}     {(CardValue)Value}    {(CardSuit)Suit}");
-        }
-
         public enum CardValue
         {
-            Двойка,
-            Тройка,
-            Четверка,
-            Пятерка,
-            Шестерка,
-            Семерка,
-            Восьмерка,
-            Девятка,
-            Десятка,
-            Валет,
-            Дама,
-            Король,
-            Туз  
+            Two,
+            Three,
+            Four,
+            Five,
+            Six,
+            Seven,
+            Eight,
+            Nine,
+            Ten,
+            Jack,
+            Queen,
+            King,
+            Ace  
         }
 
         public enum CardSuit
         {
-            Пики,
-            Бубби,
-            Черви,
-            Крести
+            Spades,
+            Diamonds,
+            Hearts,
+            Clubs
         }
 
         public enum CardColor
         {
-            Красная,
-            Черная 
+            Red,
+            Black 
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{(CardColor)Color}     {(CardValue)Value}    {(CardSuit)Suit}");
         }
     }
 
@@ -133,14 +131,12 @@ namespace CardDeck6._4
             if (deck.TryTakeCard(out Card card))
             {
                 _cardInHand.Add(card);
-                amountOfCardsInHand++;
-                Console.WriteLine($"Вы взяли карту\nУ вас в руке {amountOfCardsInHand} карт");
-                PrintPlugMassage();
+                amountOfCardsInHand++;                
+                PrintPlugMassage($"Вы взяли карту\nУ вас в руке {amountOfCardsInHand} карт\nНажмите любую кнопку для продолжения");
             }
             else
-            {
-                Console.WriteLine("В колоде законились карты");
-                PrintPlugMassage();
+            {                
+                PrintPlugMassage("В колоде законились карты\nНажмите любую кнопку для продолжения");
             }
         }
 
@@ -152,20 +148,19 @@ namespace CardDeck6._4
 
                 for (int i = 0; i < _cardInHand.Count; i++)
                 {                    
-                    _cardInHand[i].ShowCardInfo();                    
+                    _cardInHand[i].ShowInfo();                    
                 }
-                PrintPlugMassage();
+                PrintPlugMassage("Нажмите любую кнопку для продолжения");
             }
             else
-            {
-                Console.WriteLine("В руке нет карт");
-                PrintPlugMassage();
+            {                
+                PrintPlugMassage("В руке нет картНажмите любую кнопку для продолжения");
             }
         }
 
-        private void PrintPlugMassage()
+        private void PrintPlugMassage(string text)
         {
-            Console.WriteLine("Нажмите любую кнопку для продолжения");
+            Console.WriteLine(text);
             Console.ReadKey();
             Console.Clear();
         }
